@@ -88,8 +88,21 @@ git clone --depth=1 https://github.com/KakarotKernel/clang.git
 ```
 
 ```bash
-export CROSS_COMPILE=$(pwd)/clang/linaro/bin/aarch64-linux-gnu-
-export CLANG_TRIPLE=$(pwd)/clang/bin/aarch64-linux-gnu-
-export CC=$(pwd)/clang/bin/clang
+WD=$(pwd)
+#
+cd $Home && mkdir toolchains && cd toolchains
+#
+if [ -d clang ]; then
+	echo " Clang is present no need to clone"
+else
+	echo " Clonning clang"
+	git clone --depth=1 https://github.com/KakarotKernel/clang.git clang
+fi
+
+cd $WD
+
+export CROSS_COMPILE=$Home/toolchains/clang/linaro/bin/aarch64-linux-gnu-
+export CLANG_TRIPLE=$Home/toolchains/clang/bin/aarch64-linux-gnu-
+export CC=$Home/toolchains/clang/bin/clang
 ```
 export them to get it working
